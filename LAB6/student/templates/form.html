@@ -1,0 +1,14 @@
+<h2>Student Form</h2>
+
+<form method="post">
+{% csrf_token %}
+USN: <input type="text" name="usn"><br>
+Name: <input type="text" name="name"><br>
+Subject: <input type="text" name="subject"><br>
+Marks: <input type="number" name="marks"><br>
+
+<button type="submit">Submit</button>
+</form>
+
+<a href="/low/">View CIE < 20</a>
+

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+.feedback:nth-child(odd){background:#d9edf7;}
+.feedback:nth-child(even){background:#f2f2f2;}
+</style>
+
+</head>
+
+<body>
+
+<form id="form">
+{% csrf_token %}
+<input type="text" name="name" placeholder="Name"><br>
+<textarea name="message" placeholder="Feedback"></textarea><br>
+<button>Submit</button>
+</form>
+
+<div id="list">
+{% for f in data %}
+<div class="feedback"><b>{{f.name}}</b>: {{f.message}}</div>
+{% endfor %}
+</div>
+
+<script>
+
+// focus highlight
+$("input,textarea").focus(function(){
+$(this).css("background","#ffffcc");
+});
+
+// ajax
+$("#form").submit(function(e){
+e.preventDefault();
+
+$.post("/add/", $(this).serialize(), function(res){
+$("#list").prepend("<div class='feedback'><b>"+res.name+"</b>: "+res.message+"</div>")
+.children().first().hide().fadeIn();
+$("#form")[0].reset();
+});
+
+});
+
+</script>
+
+</body>
+</html>
